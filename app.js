@@ -318,6 +318,14 @@ async function fetchCounselingStrategy() {
   resultArea.textContent = "AI가 상담 전략을 생성하는 중입니다...";
   requestBtn.disabled = true;
 
+  if (window.location.protocol === 'file:') {
+    errorArea.innerHTML = "오류: 현재 단순히 HTML 파일을 더블클릭해서 실행하셨습니다. (file:// 경로)<br/>API 통신을 위해서는 로컬 서버(Vercel 등) 환경이 필요합니다.";
+    errorArea.classList.remove("hidden");
+    resultArea.style.display = "none";
+    requestBtn.disabled = false;
+    return;
+  }
+
   const payloadStr = document.getElementById("previewData").textContent;
   let payload;
   try {
